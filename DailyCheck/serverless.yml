@@ -5,12 +5,16 @@ app: scrapofy
 # "service" is the name of this project. This will also be added to your AWS resource names.
 service: DailyCheck
 
+plugins:
+  - serverless-dotenv-plugin
+
 provider:
   name: aws
   runtime: nodejs20.x
   environment:
-    SPOTIFY_CLIENT_ID: ${env.SPOTIFY_CLIENT_ID}
-    SPOTIFY_CLIENT_SECRET: ${env.SPOTIFY_CLIENT_SECRET}
+    SPOTIFY_CLIENT_ID: ${env:SPOTIFY_CLIENT_ID}
+    SPOTIFY_CLIENT_SECRET: ${env:SPOTIFY_CLIENT_SECRET}
+    SPOTIFY_REDIRECT_URI: "http://localhost:8888/callback"
 
 functions:
   rateHandler:
