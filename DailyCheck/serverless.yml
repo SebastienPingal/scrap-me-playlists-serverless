@@ -1,0 +1,19 @@
+# "org" ensures this Service is used with the correct Serverless Framework Access Key.
+org: brume
+# "app" enables Serverless Framework Dashboard features and sharing them with other Services.
+app: scrapofy
+# "service" is the name of this project. This will also be added to your AWS resource names.
+service: DailyCheck
+
+provider:
+  name: aws
+  runtime: nodejs20.x
+  environment:
+    SPOTIFY_CLIENT_ID: ${env.SPOTIFY_CLIENT_ID}
+    SPOTIFY_CLIENT_SECRET: ${env.SPOTIFY_CLIENT_SECRET}
+
+functions:
+  rateHandler:
+    handler: handler.run
+    events:
+      - schedule: rate(1 minute)
