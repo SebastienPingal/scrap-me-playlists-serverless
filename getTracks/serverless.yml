@@ -12,3 +12,7 @@ provider:
 functions:
   hello:
     handler: handler.hello
+    events:
+      - s3:
+          bucket: ${env:BUCKET_NAME}
+          event: s3:ObjectCreated:*

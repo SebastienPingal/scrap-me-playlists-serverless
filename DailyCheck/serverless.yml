@@ -17,7 +17,14 @@ provider:
     SPOTIFY_REDIRECT_URI: ${env:SPOTIFY_REDIRECT_URI}
     SPOTIFY_USER_ID: ${env:SPOTIFY_USER_ID}
     BUCKET_NAME: ${env:BUCKET_NAME}
-
+  iam:
+    role:
+      statements:
+        - Effect: Allow
+          Action:
+            - s3:PutObject
+            - s3:PutObjectAcl
+          Resource: "arn:aws:s3:::${env:BUCKET_NAME}/*"
 functions:
   rateHandler:
     handler: handler.run

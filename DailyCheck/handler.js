@@ -91,9 +91,8 @@ exports.run = async () => {
       return {
         statusCode: 200,
         body: JSON.stringify({
-          message: 'Successfully fetched playlists and tracks and uploaded to S3',
-          playlistCount: playlistsWithTracks.length,
-          totalTracks: playlistsWithTracks.reduce((sum, playlist) => sum + playlist.tracks.length, 0),
+          message: 'Successfully fetched playlists and uploaded to S3',
+          playlistCount: playlistsData.items.length,
           s3Location: `s3://${bucketName}/${s3Key}`
         })
       }
