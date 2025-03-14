@@ -1,0 +1,49 @@
+org: brume
+app: scrapofy
+service: DownloadMusic
+
+plugins:
+  - serverless-dotenv-plugin
+
+provider:
+  name: aws
+  runtime: nodejs20.x
+  environment:
+    SPOTIFY_BUCKET_NAME: ${env:SPOTIFY_BUCKET_NAME}
+  iam:
+    role:
+      statements:
+        - Effect: Allow
+          Action:
+            - dynamodb:GetItem
+            - dynamodb:Scan
+            - dynamodb:Query
+          Resource: 
+            - arn:aws:dynamodb:*:*:table/SpotifyPlaylists
+            - arn:aws:dynamodb:*:*:table/SpotifyTracks
+            - arn:aws:dynamodb:*:*:table/SpotifyTracks/index/PlaylistIndex
+
+functions:
+  getTracksHandler:
+    handler: handler.getTracks
+    events:
+      - http:
+          path: tracks
+          method: get
+          cors: true
+  
+  getPlaylistsHandler:
+    handler: handler.getPlaylists
+    events:
+      - http:
+          path: playlists
+          method: get
+          cors: true
+  
+  getTracksByPlaylistHandler:
+    handler: handler.getTracksByPlaylist
+    events:
+      - http:
+          path: playlists/{playlistId}/tracks
+          method: get
+          cors: true 

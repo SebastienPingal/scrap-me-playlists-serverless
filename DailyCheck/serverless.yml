@@ -14,7 +14,9 @@ provider:
   environment:
     SPOTIFY_CLIENT_ID: ${env:SPOTIFY_CLIENT_ID}
     SPOTIFY_CLIENT_SECRET: ${env:SPOTIFY_CLIENT_SECRET}
-    SPOTIFY_REDIRECT_URI: "http://localhost:8888/callback"
+    SPOTIFY_REDIRECT_URI: ${env:SPOTIFY_REDIRECT_URI}
+    SPOTIFY_USER_ID: ${env:SPOTIFY_USER_ID}
+    BUCKET_NAME: ${env:BUCKET_NAME}
 
 functions:
   rateHandler:
