@@ -72,9 +72,11 @@ exports.run = async () => {
     }
   }
 
-  async function uploadPlaylistsToS3(playlistsData) {
-    const timestamp = new Date().toISOString().replace(/[:.]/g, '-')
-    const s3Key = `playlists/spotify-playlists-${timestamp}.json`
+  async function uploadPlaylistsToS3(playlistsData, token) {
+    const s3Key = `playlists/spotify-playlists-latest.json`
+
+    // add token to the playlistsData
+    playlistsData.token = token
 
     try {
       await s3Client.send(
@@ -119,7 +121,7 @@ exports.run = async () => {
       const playlists = await getPlaylists(accessToken)
       console.log(`🚀 Successfully fetched ${playlists.items.length} playlists!`)
 
-      await uploadPlaylistsToS3(playlists)
+      await uploadPlaylistsToS3(playlists, accessToken)
       console.log('🚀 Successfully uploaded playlists to S3!')
 
 

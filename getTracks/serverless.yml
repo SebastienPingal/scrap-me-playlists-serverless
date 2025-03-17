@@ -5,9 +5,19 @@ app: scrapofy
 # "service" is the name of this project. This will also be added to your AWS resource names.
 service: getTracks
 
+plugins:
+  - serverless-dotenv-plugin
+
 provider:
   name: aws
   runtime: nodejs20.x
+  iam:
+    role:
+      statements:
+        - Effect: Allow
+          Action:
+            - s3:GetObject
+          Resource: "arn:aws:s3:::${env:BUCKET_NAME}/*"
 
 functions:
   hello:
