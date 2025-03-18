@@ -17,7 +17,11 @@ provider:
         - Effect: Allow
           Action:
             - s3:GetObject
-          Resource: "arn:aws:s3:::${env:BUCKET_NAME}/*"
+            - s3:PutObject
+            - s3:ListBucket
+          Resource:
+            - arn:aws:s3:::${env:BUCKET_NAME}
+            - arn:aws:s3:::${env:BUCKET_NAME}/*
 
 functions:
   hello:
@@ -26,3 +30,6 @@ functions:
       - s3:
           bucket: ${env:BUCKET_NAME}
           event: s3:ObjectCreated:*
+          rules:
+            - prefix: playlists/
+            - suffix: latest.json
